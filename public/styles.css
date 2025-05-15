@@ -1,0 +1,93 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #e0e0e0;
+}
+
+.counter-container {
+  background-color: #2d2d2d;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  padding: 30px 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.channel-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.counter-value {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 20px 0;
+  color: #ffffff;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.label {
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.btn:hover {
+  background-color: #cc0000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.plus-icon {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.counter-animation {
+  animation: count-change 0.5s ease;
+}
+
+@keyframes count-change {
+  0% { opacity: 0.3; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 12px;
+  color: #777777;
+}

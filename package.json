@@ -1,0 +1,16 @@
+{
+  "name": "youtube-counter",
+  "version": "1.0.0",
+  "description": "YouTube-style subscriber counter",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "parcel public/index.html",
+    "build": "parcel build public/index.html"
+  },
+  "dependencies": {
+    "firebase": "^10.8.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
