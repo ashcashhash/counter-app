@@ -1,6 +1,6 @@
 // Import Firebase SDK
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue, get, set } from 'firebase/database';
+import { getDatabase, ref, onValue, runTransaction, serverTimestamp } from 'firebase/database';
 
 // Firebase configuration will be injected by the build process
 // instead of being hardcoded here
@@ -29,7 +29,7 @@ onValue(counterRef, (snapshot) => {
   counterElement.textContent = formatNumber(currentCount);
 });
 
-// Increment counter
+// Increment counter with transaction for handling concurrency
 incrementBtn.addEventListener('click', () => {
   // Create YouTube-style count animation
   counterElement.classList.add('counter-animation');
@@ -37,12 +37,29 @@ incrementBtn.addEventListener('click', () => {
     counterElement.classList.remove('counter-animation');
   }, 500);
   
-  // Get current count
-  get(counterRef).then((snapshot) => {
-    const currentCount = snapshot.val() || 0;
-    
-    // Increment counter in Firebase
-    set(counterRef, currentCount + 1);
+  // Use a transaction to safely increment the counter
+  // This handles multiple users incrementing at the same time
+  runTransaction(counterRef, (currentValue) => {
+    // If the counter doesn't exist yet, start at 1
+    // Otherwise increment the existing value
+    return (currentValue || 0) + 1;
+  }).then((result) => {
+    if (result.committed) {
+      console.log('Transaction completed successfully!');
+      // Optional: log the user's increment with a timestamp
+      const logsRef = ref(database, 'logs');
+      const newLogRef = ref(database, `logs/${Date.now()}`);
+      const logData = {
+        timestamp: serverTimestamp(),
+        newCount: result.snapshot.val()
+      };
+      // You could save who incremented with user auth info here too
+      runTransaction(newLogRef, () => logData);
+    } else {
+      console.log('Transaction aborted');
+    }
+  }).catch((error) => {
+    console.error('Transaction failed:', error);
   });
 });
 
