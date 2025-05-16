@@ -5,13 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Claude Counter</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Add loader styles */
+    .loader {
+      display: inline-block;
+      width: 48px;
+      height: 48px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Hide counter value when loading */
+    .counter-value {
+      min-height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .counter-value.loading span {
+      display: none;
+    }
+
+    .counter-value:not(.loading) .loader {
+      display: none;
+    }
+
+    /* Add button disabled state */
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  </style>
 </head>
 <body>
   <div class="counter-container">
     <div class="channel-name">AppDev's Claude Prompt Counter</div>
     <div class="label">Current Count</div>
-    <div class="counter-value" id="counter">0</div>
-    <button class="btn" id="incrementBtn">
+    <div class="counter-value loading" id="counter">
+      <div class="loader"></div>
+      <span>0</span>
+    </div>
+    <button class="btn" id="incrementBtn" disabled>
       <span class="plus-icon">+</span>Claude it!
     </button>
     <div class="footer">

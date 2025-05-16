@@ -21,16 +21,33 @@ const counterRef = ref(database, 'counter');
 
 // DOM elements
 const counterElement = document.getElementById('counter');
+const counterValueSpan = counterElement.querySelector('span');
 const incrementBtn = document.getElementById('incrementBtn');
+
+// Start with the loader showing and button disabled
+counterElement.classList.add('loading');
+incrementBtn.disabled = true;
 
 // Update counter value from Firebase
 onValue(counterRef, (snapshot) => {
+  // Data is loaded, remove loading state
+  counterElement.classList.remove('loading');
+  incrementBtn.disabled = false;
+  
   const currentCount = snapshot.val() || 0;
-  counterElement.textContent = formatNumber(currentCount);
+  counterValueSpan.textContent = formatNumber(currentCount);
+}, (error) => {
+  // Handle errors
+  console.error('Error fetching counter value:', error);
+  counterElement.classList.remove('loading');
+  counterValueSpan.textContent = 'Error';
 });
 
 // Increment counter with transaction for handling concurrency
 incrementBtn.addEventListener('click', () => {
+  // Disable the button during transaction to prevent multiple clicks
+  incrementBtn.disabled = true;
+  
   // Create YouTube-style count animation
   counterElement.classList.add('counter-animation');
   setTimeout(() => {
@@ -44,22 +61,26 @@ incrementBtn.addEventListener('click', () => {
     // Otherwise increment the existing value
     return (currentValue || 0) + 1;
   }).then((result) => {
+    // Re-enable the button after transaction completes
+    incrementBtn.disabled = false;
+    
     if (result.committed) {
       console.log('Transaction completed successfully!');
       // Optional: log the user's increment with a timestamp
-      const logsRef = ref(database, 'logs');
-      const newLogRef = ref(database, `logs/${Date.now()}`);
+      const logsRef = ref(database, `logs/${Date.now()}`);
       const logData = {
         timestamp: serverTimestamp(),
         newCount: result.snapshot.val()
       };
       // You could save who incremented with user auth info here too
-      runTransaction(newLogRef, () => logData);
+      runTransaction(logsRef, () => logData);
     } else {
       console.log('Transaction aborted');
     }
   }).catch((error) => {
     console.error('Transaction failed:', error);
+    // Re-enable the button if there's an error
+    incrementBtn.disabled = false;
   });
 });
 

@@ -82,12 +82,58 @@ body {
 }
 
 @keyframes count-change {
-  0% { opacity: 0.3; transform: scale(0.96); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0.3;
+    transform: scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .footer {
   margin-top: 30px;
   font-size: 12px;
   color: #777777;
+}
+
+/* Add loader styles */
+.loader {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hide counter value when loading */
+.counter-value.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter-value.loading span {
+  display: none;
+}
+
+/* Add button disabled state */
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
