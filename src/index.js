@@ -126,10 +126,10 @@ let clickCount = parseInt(localStorage.getItem(clickCountKey) || '0');
 // Update button state based on remaining clicks
 function updateButtonState() {
   if (clickCount >= 5) {
-    incrementBtn.innerText = 'Daily Limit Reached (5/5)';
+    incrementBtn.innerText = 'Daily Limit Reached'
     incrementBtn.disabled = true;
   } else {
-    incrementBtn.innerText = `I Generated a Component (${clickCount}/5)`;
+    incrementBtn.innerText = `I Generated a Component`;
     incrementBtn.disabled = false;
   }
 }
