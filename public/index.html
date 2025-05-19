@@ -37,7 +37,7 @@
       display: none;
     }
 
-    /* Add button disabled state */
+    /* Button disabled state */
     .btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
@@ -47,21 +47,98 @@
       transform: none;
       box-shadow: none;
     }
+    
+    /* Additional styles */
+    .counter-container {
+      position: relative;
+    }
+
+    .info-tooltip {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .info-tooltip:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .tooltip-content {
+      position: absolute;
+      top: 30px;
+      right: 0;
+      width: 250px;
+      padding: 10px;
+      background-color: #333;
+      border: 1px solid #555;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.4;
+      text-align: left;
+      z-index: 100;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .info-tooltip:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #ff9090;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(255, 0, 0, 0.1);
+      line-height: 1.4;
+
+    }
+
+    .list{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
   </style>
 </head>
 <body>
   <div class="counter-container">
+    <div class="info-tooltip">?
+      <div class="tooltip-content">
+        This counter tracks the number of UI components generated with Claude. Only increment when you've actually created and implemented a component with Claude's assistance. You'll need to provide the project name and component description.
+      </div>
+    </div>
     <div class="channel-name">Claud-O-Meter</div>
-    <div class="label">Current Count</div>
+    <div class="label">Components Generated with Claude</div>
     <div class="counter-value loading" id="counter">
       <div class="loader"></div>
       <span>0</span>
     </div>
     <button class="btn" id="incrementBtn" disabled>
-      <span class="plus-icon">+</span>Claude it!
+      <span class="plus-icon">+</span>I Generated a Component (0/5)
     </button>
     <div class="footer">
-      Click the button if you used claude and it helped, it's updated in real-time
+      <strong>IMPORTANT:</strong> You'll need to provide two fields to increment the counter:
+      <ol class="list">
+        <li>Project name the component was created for</li>
+        <li>Brief description of the component</li>
+      </ol>
+      Please keep the count realistic and only record actual components generated with Claude. Limited to 5 entries per day.
     </div>
   </div>
 
